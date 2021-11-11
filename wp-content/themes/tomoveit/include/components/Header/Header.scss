@@ -1,0 +1,149 @@
+@import '../../scss/config';
+@import '../../scss/colors';
+
+.header {
+  height: 6.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 1.25rem;
+
+  &__clubsvg {
+    margin-right: 1rem;
+  }
+
+  &__stats {
+    z-index: 1;
+
+    svg {
+      cursor: pointer;
+      width: 2.5rem;
+      height: 2.5rem;
+      z-index: 1;
+    }
+  }
+
+  &__back {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+
+    p {
+      margin-bottom: 0;
+      margin-left: 1.6875rem;
+      display: none;
+
+      font-style: italic;
+      font-weight: 900;
+      font-size: 1.3125rem;
+      line-height: 1.625rem;
+    }
+
+    svg {
+      fill: $color-black;
+      width: 1.875rem;
+      height: 1.3125rem;
+    }
+  }
+
+  span {
+    text-transform: uppercase;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.header-image {
+  height: 9.375rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 2.5rem;
+
+  &__back {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+
+    p {
+      font-style: italic;
+      font-weight: 900;
+      font-size: 1.3125rem;
+      line-height: 1.625rem;
+    }
+
+    &--white {
+      svg {
+        fill: $color-white;
+      }
+    }
+  }
+
+  svg {
+    width: 2.5rem;
+    height: 1.875rem;
+    z-index: 1;
+  }
+
+  p {
+    color: $color-white;
+    margin-bottom: 0;
+  }
+
+  img {
+    display: block;
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+
+    filter: brightness(50%);
+  }
+}
+
+@media all and (min-width: $breakpoint-m) {
+  .header {
+    height: 13.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 0 0 33%;
+    margin: 0 5.5rem;
+
+    &__stats {
+      svg {
+        width: 5rem;
+        height: 5rem;
+      }
+    }
+
+    &__back {
+      span {
+        font-style: italic;
+        font-weight: 900;
+        font-size: 1.3125rem;
+        line-height: 1.625rem;
+      }
+
+      p {
+        display: block;
+      }
+    }
+  }
+
+  .header-image {
+    padding: 0 5.5rem;
+    height: 13.75rem;
+
+    p {
+      margin-left: 1.6875rem;
+    }
+  }
+}

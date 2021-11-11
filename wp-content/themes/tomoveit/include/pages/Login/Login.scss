@@ -1,0 +1,13 @@
+.login {
+  &__error {
+    margin-top: 1rem;
+    color: red;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}

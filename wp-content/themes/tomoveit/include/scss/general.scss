@@ -1,0 +1,131 @@
+@import './config';
+@import './colors';
+
+html {
+  font-size: 100%;
+  display: block;
+}
+
+body {
+  color: $color-black;
+  background: $color-white;
+  font-family: $font-monserant;
+}
+
+/* To not show the svg spritemap */
+body > svg:first-of-type {
+  display: none;
+}
+
+a {
+  transition: color 200ms ease-in-out;
+  text-decoration: none;
+}
+
+b, strong {
+  font-weight: 600;
+}
+
+i, em {
+  font-style: italic;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+
+p {
+  font-size: 1rem;
+  text-align: center;
+  line-height: 1.4rem;
+  margin-bottom: 2rem;
+  white-space: pre-wrap;
+
+  font-weight: 700;
+}
+
+span {
+  color: $color-gray;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 20px;
+  white-space: pre-wrap;
+}
+
+h2, .h2 {
+  font-weight: 600;
+  font-size: 1.625rem;
+  margin-bottom: .5rem;
+  line-height: 1.875rem;
+}
+
+h3, .h3 {
+  font-style: italic;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  white-space: pre-wrap;
+}
+
+h4, .h4 {
+  font-weight: 600;
+  font-size: 1.125rem;
+  margin-bottom: .5rem;
+  line-height: 1.375rem;
+}
+
+h5, .h5 {
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.25rem;
+  margin-bottom: .25rem;
+}
+
+button {
+  font-family: $font-monserant;
+}
+
+@media all and (min-width: $breakpoint-m) {
+  p {
+    font-style: italic;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    margin-bottom: 2rem;
+    white-space: pre-wrap;
+  }
+
+  span {
+    white-space: pre-wrap;
+  }
+
+  h3, .h3 {
+    font-size: 27px;
+    line-height: 33px;
+    white-space: pre-wrap;
+  }
+
+  .alignleft {
+    float: left;
+    margin-right: 1.875rem;
+    margin-bottom: 1.875rem;
+  }
+
+  .alignright {
+    float: right;
+    margin-left: 1.875rem;
+    margin-bottom: 1.875rem;
+  }
+}
+
+@media all and (min-width: $breakpoint-xl) {
+  h4, .h4 {
+    font-size: 1.125rem;
+    line-height: 1.25rem;
+    margin-bottom: .5rem;
+  }
+}

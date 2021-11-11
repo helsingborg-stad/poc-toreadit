@@ -1,0 +1,53 @@
+@import './config';
+
+.container {
+  &__inner {
+    &:not(&--wide) {
+      padding-left: $margin-horizontal-small;
+      padding-right: $margin-horizontal-small;
+    }
+  }
+}
+
+@media all and (min-width: $breakpoint-m) {
+  .container {
+    &__inner {
+      &:not(&--wide) {
+        padding-left: $margin-horizontal-medium;
+        padding-right: $margin-horizontal-medium;
+      }
+    }
+  }
+}
+
+@media all and (min-width: $breakpoint-l) {
+  .container {
+    &__inner {
+      &--centered {
+        text-align: center;
+      }
+    }
+  }
+}
+
+@media all and (min-width: $breakpoint-xl) {
+  .container {
+    &__inner {
+      &:not(&--wide) {
+        padding-left: 22.6875rem;
+        padding-right: 22.6875rem;
+      }
+    }
+  }
+}
+
+@media all and (min-width: $breakpoint-xxxl) {
+  .container {
+    &__inner {
+      &:not(&--wide) {
+        padding-left: $margin-horizontal-large;
+        padding-right: $margin-horizontal-large;
+      }
+    }
+  }
+}

@@ -1,0 +1,81 @@
+@import '../../scss/colors';
+@import '../../scss/config';
+
+.single-activity {
+  margin: 0 2rem 6.6875rem 2rem;
+
+  h1 {
+    font-style: italic;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 29px;
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  p {
+    text-align: left;
+    font-style: italic;
+    white-space: pre-wrap;
+  }
+
+  &__line {
+    height: 0;
+    width: 100%;
+    border: .5px solid #bdc3c7;
+    margin-bottom: 2.5rem;
+    margin-top: 2.5rem;
+  }
+
+  &__text-title {
+    margin-bottom: 0;
+    text-align: left;
+  }
+
+  &__player-wrapper {
+    text-align: center;
+
+    p {
+      text-align: center;
+      margin-top: 1rem;
+      color: $color-gray;
+    }
+  }
+
+  &__title {
+    &--blue {
+      color: $color-light-blue;
+    }
+
+    &--green {
+      color: $color-light-green;
+    }
+  }
+}
+
+@media all and (min-width: $breakpoint-m) {
+  .single-activity {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 40rem;
+    margin: 0 auto 0 auto;
+
+    &__player-wrapper {
+      width: 100%;
+      height: 358px;
+      margin-top: 1.25rem;
+    }
+
+    &__line {
+      margin-bottom: 5rem;
+      margin-top: 5rem;
+    }
+
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.75rem;
+    }
+  }
+}

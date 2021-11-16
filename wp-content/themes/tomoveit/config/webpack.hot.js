@@ -38,7 +38,7 @@ module.exports = merge(common, {
     overlay: true,
     open: false,
     allowedHosts: [
-      'tomoveit.test',
+      'toreadit.test',
     ],
     headers: {
       'Access-Control-Allow-Origin': '*',

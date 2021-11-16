@@ -1,7 +1,7 @@
 {
-  "name": "tomoveit",
+  "name": "toreadit",
   "version": "1.0.0",
-  "description": "NPM Setup for Tomoveit Order App",
+  "description": "NPM Setup for Toreadit App",
   "private": true,
   "scripts": {
     "prod": "npm run production",

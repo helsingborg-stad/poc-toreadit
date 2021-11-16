@@ -9,11 +9,13 @@ $ec_theme = new EC_Theme;
  * Class EC_Theme
  */
 class EC_Theme {
+    public $text_domain;
 
     /**
      * Theme constructor.
      */
     public function __construct(){
+        $this->text_domain = 'toreadit_theme';
         // Add actions:
         add_action('wp_enqueue_scripts', [&$this, 'load_plugin_scripts']);
         add_action('output_spritemaps', [&$this, 'output_plugin_spritemap']);
@@ -39,20 +41,20 @@ class EC_Theme {
         $post_types = [
             'activities' => [
                 'labels' => [
-                    'name'               => _x('Aktiviteter', 'post type general name', $this->theme_locale),
-                    'singular_name'      => _x('Aktivitet', 'post type singular name', $this->theme_locale),
-                    'menu_name'          => _x('Aktiviteter', 'admin menu', $this->theme_locale),
-                    'name_admin_bar'     => _x('Aktivitet', 'add new on admin bar', $this->theme_locale),
-                    'add_new'            => _x('Lägg till', 'aktivitet', $this->theme_locale),
-                    'add_new_item'       => __('Lägg till aktivitet', $this->theme_locale),
-                    'new_item'           => __('Ny aktivitet', $this->theme_locale),
-                    'edit_item'          => __('Redigera aktivitet', $this->theme_locale),
-                    'view_item'          => __('Visa aktivitet', $this->theme_locale),
-                    'all_items'          => __('Alla aktiviteter', $this->theme_locale),
-                    'search_items'       => __('Sök aktivitet', $this->theme_locale),
-                    'parent_item_colon'  => __('Förälder:', $this->theme_locale),
-                    'not_found'          => __('Inga aktiviteter hittades.', $this->theme_locale),
-                    'not_found_in_trash' => __('Inga aktiviteter hittades i papperskorgen.', $this->theme_locale)
+                    'name'               => _x('Aktiviteter', 'post type general name', $this->text_domain),
+                    'singular_name'      => _x('Aktivitet', 'post type singular name', $this->text_domain),
+                    'menu_name'          => _x('Aktiviteter', 'admin menu', $this->text_domain),
+                    'name_admin_bar'     => _x('Aktivitet', 'add new on admin bar', $this->text_domain),
+                    'add_new'            => _x('Lägg till', 'aktivitet', $this->text_domain),
+                    'add_new_item'       => __('Lägg till aktivitet', $this->text_domain),
+                    'new_item'           => __('Ny aktivitet', $this->text_domain),
+                    'edit_item'          => __('Redigera aktivitet', $this->text_domain),
+                    'view_item'          => __('Visa aktivitet', $this->text_domain),
+                    'all_items'          => __('Alla aktiviteter', $this->text_domain),
+                    'search_items'       => __('Sök aktivitet', $this->text_domain),
+                    'parent_item_colon'  => __('Förälder:', $this->text_domain),
+                    'not_found'          => __('Inga aktiviteter hittades.', $this->text_domain),
+                    'not_found_in_trash' => __('Inga aktiviteter hittades i papperskorgen.', $this->text_domain)
                 ],
                 'public'                 => false,
                 'publicly_queryable'     => true,
@@ -67,20 +69,20 @@ class EC_Theme {
             ],
             'activities_company' => [
                 'labels' => [
-                    'name'               => _x('Föreningsaktiviteter', 'post type general name', $this->theme_locale),
-                    'singular_name'      => _x('Föreningsaktivitet', 'post type singular name', $this->theme_locale),
-                    'menu_name'          => _x('Föreningsaktivitet', 'admin menu', $this->theme_locale),
-                    'name_admin_bar'     => _x('Föreningsaktivitet', 'add new on admin bar', $this->theme_locale),
-                    'add_new'            => _x('Lägg till', 'föreningsaktivitet', $this->theme_locale),
-                    'add_new_item'       => __('Lägg till föreningsaktivitet', $this->theme_locale),
-                    'new_item'           => __('Ny föreningsaktivitet', $this->theme_locale),
-                    'edit_item'          => __('Redigera föreningsaktivitet', $this->theme_locale),
-                    'view_item'          => __('Visa föreningsaktiviteter', $this->theme_locale),
-                    'all_items'          => __('Alla Föreningsaktiviteter', $this->theme_locale),
-                    'search_items'       => __('Sök föreningsaktivitet', $this->theme_locale),
-                    'parent_item_colon'  => __('Förälder:', $this->theme_locale),
-                    'not_found'          => __('Inga föreningsaktiviteter hittades.', $this->theme_locale),
-                    'not_found_in_trash' => __('Inga föreningsaktiviteter hittades i papperskorgen.', $this->theme_locale)
+                    'name'               => _x('Föreningsaktiviteter', 'post type general name', $this->text_domain),
+                    'singular_name'      => _x('Föreningsaktivitet', 'post type singular name', $this->text_domain),
+                    'menu_name'          => _x('Föreningsaktivitet', 'admin menu', $this->text_domain),
+                    'name_admin_bar'     => _x('Föreningsaktivitet', 'add new on admin bar', $this->text_domain),
+                    'add_new'            => _x('Lägg till', 'föreningsaktivitet', $this->text_domain),
+                    'add_new_item'       => __('Lägg till föreningsaktivitet', $this->text_domain),
+                    'new_item'           => __('Ny föreningsaktivitet', $this->text_domain),
+                    'edit_item'          => __('Redigera föreningsaktivitet', $this->text_domain),
+                    'view_item'          => __('Visa föreningsaktiviteter', $this->text_domain),
+                    'all_items'          => __('Alla Föreningsaktiviteter', $this->text_domain),
+                    'search_items'       => __('Sök föreningsaktivitet', $this->text_domain),
+                    'parent_item_colon'  => __('Förälder:', $this->text_domain),
+                    'not_found'          => __('Inga föreningsaktiviteter hittades.', $this->text_domain),
+                    'not_found_in_trash' => __('Inga föreningsaktiviteter hittades i papperskorgen.', $this->text_domain)
                 ],
                 'public'                 => false,
                 'publicly_queryable'     => true,
@@ -95,20 +97,20 @@ class EC_Theme {
             ],
             'armbands' => [
                 'labels' => [
-                    'name'               => _x('Armband', 'post type general name', $this->theme_locale),
-                    'singular_name'      => _x('Armband', 'post type singular name', $this->theme_locale),
-                    'menu_name'          => _x('Armband', 'admin menu', $this->theme_locale),
-                    'name_admin_bar'     => _x('Armband', 'add new on admin bar', $this->theme_locale),
-                    'add_new'            => _x('Lägg till', 'armband', $this->theme_locale),
-                    'add_new_item'       => __('Lägg till armband', $this->theme_locale),
-                    'new_item'           => __('Nytt armband', $this->theme_locale),
-                    'edit_item'          => __('Redigera armband', $this->theme_locale),
-                    'view_item'          => __('Visa armband', $this->theme_locale),
-                    'all_items'          => __('Alla armband', $this->theme_locale),
-                    'search_items'       => __('Sök armband', $this->theme_locale),
-                    'parent_item_colon'  => __('Förälder:', $this->theme_locale),
-                    'not_found'          => __('Inga armband hittades.', $this->theme_locale),
-                    'not_found_in_trash' => __('Inga armband hittades i papperskorgen.', $this->theme_locale)
+                    'name'               => _x('Armband', 'post type general name', $this->text_domain),
+                    'singular_name'      => _x('Armband', 'post type singular name', $this->text_domain),
+                    'menu_name'          => _x('Armband', 'admin menu', $this->text_domain),
+                    'name_admin_bar'     => _x('Armband', 'add new on admin bar', $this->text_domain),
+                    'add_new'            => _x('Lägg till', 'armband', $this->text_domain),
+                    'add_new_item'       => __('Lägg till armband', $this->text_domain),
+                    'new_item'           => __('Nytt armband', $this->text_domain),
+                    'edit_item'          => __('Redigera armband', $this->text_domain),
+                    'view_item'          => __('Visa armband', $this->text_domain),
+                    'all_items'          => __('Alla armband', $this->text_domain),
+                    'search_items'       => __('Sök armband', $this->text_domain),
+                    'parent_item_colon'  => __('Förälder:', $this->text_domain),
+                    'not_found'          => __('Inga armband hittades.', $this->text_domain),
+                    'not_found_in_trash' => __('Inga armband hittades i papperskorgen.', $this->text_domain)
                 ],
                 'public'                 => false,
                 'publicly_queryable'     => true,
@@ -123,20 +125,20 @@ class EC_Theme {
             ],
             'texts' => [
                 'labels' => [
-                    'name'               => _x('Texter', 'post type general name', $this->theme_locale),
-                    'singular_name'      => _x('Texter', 'post type singular name', $this->theme_locale),
-                    'menu_name'          => _x('Texter', 'admin menu', $this->theme_locale),
-                    'name_admin_bar'     => _x('Texter', 'add new on admin bar', $this->theme_locale),
-                    'add_new'            => _x('Lägg till', 'text', $this->theme_locale),
-                    'add_new_item'       => __('Lägg till text', $this->theme_locale),
-                    'new_item'           => __('Ny text', $this->theme_locale),
-                    'edit_item'          => __('Redigera text', $this->theme_locale),
-                    'view_item'          => __('Visa texter', $this->theme_locale),
-                    'all_items'          => __('Alla texter', $this->theme_locale),
-                    'search_items'       => __('Sök texter', $this->theme_locale),
-                    'parent_item_colon'  => __('Förälder:', $this->theme_locale),
-                    'not_found'          => __('Inga texter hittades.', $this->theme_locale),
-                    'not_found_in_trash' => __('Inga texter hittades i papperskorgen.', $this->theme_locale)
+                    'name'               => _x('Texter', 'post type general name', $this->text_domain),
+                    'singular_name'      => _x('Texter', 'post type singular name', $this->text_domain),
+                    'menu_name'          => _x('Texter', 'admin menu', $this->text_domain),
+                    'name_admin_bar'     => _x('Texter', 'add new on admin bar', $this->text_domain),
+                    'add_new'            => _x('Lägg till', 'text', $this->text_domain),
+                    'add_new_item'       => __('Lägg till text', $this->text_domain),
+                    'new_item'           => __('Ny text', $this->text_domain),
+                    'edit_item'          => __('Redigera text', $this->text_domain),
+                    'view_item'          => __('Visa texter', $this->text_domain),
+                    'all_items'          => __('Alla texter', $this->text_domain),
+                    'search_items'       => __('Sök texter', $this->text_domain),
+                    'parent_item_colon'  => __('Förälder:', $this->text_domain),
+                    'not_found'          => __('Inga texter hittades.', $this->text_domain),
+                    'not_found_in_trash' => __('Inga texter hittades i papperskorgen.', $this->text_domain)
                 ],
                 'public'                 => false,
                 'publicly_queryable'     => true,

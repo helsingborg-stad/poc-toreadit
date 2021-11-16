@@ -37,7 +37,6 @@ class EC_Theme {
             register_taxonomy($name, $values['post_types'], $values['options']);
         }
 
-
         $post_types = [
             'activities' => [
                 'labels' => [

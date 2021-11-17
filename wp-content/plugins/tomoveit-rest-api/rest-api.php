@@ -214,6 +214,12 @@ class TomoveitRestApi_Routes {
                 ],
             ],
         ]);
+        register_rest_route($namespace, '/classes-data', [
+            [
+                'methods' => WP_REST_Server::CREATABLE,
+                'callback' => [$this, 'rest_get_total_classes_data'],
+            ],
+        ]);
     }
 
     public function rest_get_texts() {
@@ -669,6 +675,32 @@ class TomoveitRestApi_Routes {
                 if ($result->created_at === $date) {
                    $pages = $result->pages;
                     $total_pages_sum += $result->pages;
+                }
+            }
+            array_push($data, $pages);
+        }
+
+        return ['pages_array' => $data, 'total_pages_sum' => $total_pages_sum];
+    }
+
+    public function rest_get_total_classes_data($request) {
+        $startDate = $request->get_param('start_date');
+        $endDate = $request->get_param('end_date');
+        $table = 'toreadit_reading';
+        global $wpdb;
+        // SELECT created_at, sum(pages) as sum_pages FROM toreadit_reading WHERE class='6A' AND created_at <= '2021-11-22' AND created_at >= '2021-11-15' group by created_at;
+        $results_6a = $wpdb->get_results($wpdb->prepare("SELECT created_at, sum(pages) as sum_pages FROM $table WHERE class='6A' AND created_at <= '%s' AND created_at >= '%s' group by created_at;", $endDate, $startDate));
+
+        $data = [];
+        $total_pages_sum = 0;
+        // TODO: Refactor this horrible for loop
+        for ($i = 1;$i < 8;$i++) {
+            $date = date('Y-m-d', strtotime($startDate. ' + ' . $i .' days'));
+            $pages = 0;
+            foreach($results_6a as $result) {
+                if ($result->created_at === $date) {
+                    $pages = $result->sum_pages;
+                    $total_pages_sum += $result->sum_pages;
                 }
             }
             array_push($data, $pages);

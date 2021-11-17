@@ -17,6 +17,7 @@ import PrivateRoute from '../PrivateRoute/PrivateRoute.jsx';
 import CompanyActivities from '../../pages/CompanyActivities/CompanyActivities.jsx';
 import SingleCompanyActivity from '../../pages/SingleCompanyActivity/SingleCompanyActivity.jsx';
 import ReadingInput from '../../pages/ReadingInput/ReadingInput.jsx';
+import StatisticsOverall from '../../pages/StatisticsOverall/StatisticsOverall.jsx';
 const store = configureStore();
 
 const App = () => {
@@ -36,6 +37,7 @@ const App = () => {
             <PrivateRoute path="/föreningar" component={CompanyActivities} />
             <PrivateRoute path="/aktivitet" component={SingleCompanyActivity} />
             <PrivateRoute path="/läsning" component={ReadingInput} />
+            <Route path="/klass-statistik" component={StatisticsOverall} />
           </Switch>
         </HashRouter>
       </PersistGate>

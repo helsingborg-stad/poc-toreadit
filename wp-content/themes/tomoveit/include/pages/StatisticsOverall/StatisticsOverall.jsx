@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
-import styles from './Statistics.scss';
+import styles from './StatisticsOverall.scss';
 import { useSelector } from 'react-redux';
 import { Chart } from 'chart.js';
 /* eslint-disable */
@@ -11,7 +11,7 @@ import axios from 'axios';
 
 const style = classNames.bind(styles);
 
-const Statistics = () => {
+const StatisticsOverall = () => {
   const pin = useSelector(state => state.app.pin);
   const [loding, setLoading] = useState(false);
   const [date, setdate] = useState(new Date());
@@ -25,7 +25,7 @@ const Statistics = () => {
 
     setLoading(true);
 
-    axios.post('https://toreadit.test/wp-json/TomoveitRestApi/v1/data', {
+    axios.post('https://toreadit.test/wp-json/TomoveitRestApi/v1/classes-data', {
       pin: pin,
       start_date: monday,
       end_date: sunday,
@@ -141,4 +141,4 @@ const Statistics = () => {
   );
 };
 
-export default Statistics;
+export default StatisticsOverall;

@@ -272,10 +272,6 @@ class TomoveitRestApi_Routes {
         return $result;
     }
 
-    public function rest_get_data($request) {
-      // remove this?
-    }
-
     public function rest_get_admin_data($request) {
         // remove this?
     }
@@ -621,6 +617,7 @@ class TomoveitRestApi_Routes {
         $pin = $request->get_param('pin');
         $pages = $request->get_param('pages');
         $date = date('Y-m-d');
+        $class = $this->get_student_class($pin);
 
         $table = 'toreadit_reading';
 
@@ -628,17 +625,55 @@ class TomoveitRestApi_Routes {
         $wpdb->insert($table, array(
             'pages' => $pages,
             'pin' => $pin,
-            'class' => '6A',
+            'class' => $class,
             'created_at' => $date,
         ));
     }
 
+    public function get_student_class($pin) {
+        $posts = get_posts(array(
+            'numberposts'	=> -1,
+            'post_type'		=> 'armbands',
+            'meta_key'		=> 'armbands_pin_code',
+            'meta_value'	=> $pin,
+        ));
+        $class = get_field('armbands_class', $posts[0]->ID);
+        return $class;
+    }
+
     public function rest_check_if_already_registered($request) {
         $pin = $request->get_param('pin');
+
         global $wpdb;
         $table = 'toreadit_reading';
         $date = date('Y-m-d');
         $result = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table WHERE pin='%s' AND created_at='%s';", $pin, $date));
         return count($result) > 0;
+    }
+
+    public function rest_get_data($request) {
+        $pin = $request->get_param('pin');
+        $startDate = $request->get_param('start_date');
+        $endDate = $request->get_param('end_date');
+        global $wpdb;
+        $table = 'toreadit_reading';
+        $results = $wpdb->get_results($wpdb->prepare("SELECT pages, created_at FROM $table WHERE pin='%s' AND created_at <= '%s' AND created_at >= '%s';", $pin, $endDate, $startDate));
+
+        $data = [];
+        $total_pages_sum = 0;
+        // TODO: Refactor this horrible for loop
+        for ($i = 1;$i < 8;$i++) {
+            $date = date('Y-m-d', strtotime($startDate. ' + ' . $i .' days'));
+            $pages = 0;
+            foreach($results as $result) {
+                if ($result->created_at === $date) {
+                   $pages = $result->pages;
+                    $total_pages_sum += $result->pages;
+                }
+            }
+            array_push($data, $pages);
+        }
+
+        return ['pages_array' => $data, 'total_pages_sum' => $total_pages_sum];
     }
 }

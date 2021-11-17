@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './ReadingInput.scss';
 
@@ -25,9 +25,7 @@ const ReadingInput = () => {
       pin: pin,
     },
     ).then((response) => {
-      console.log('CHECK', response);
       if (response.data) {
-        console.log('GÅ VIDARE');
         history.push('/activities');
       }
     }, (error) => {
@@ -48,7 +46,7 @@ const ReadingInput = () => {
       pages: pages,
     },
     ).then((response) => {
-      console.log('200 ok');
+      history.push('/activities');
     }, (error) => {
       console.log(error);
     });

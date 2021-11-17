@@ -181,6 +181,39 @@ class TomoveitRestApi_Routes {
                 'callback' => [$this, 'rest_reset_introduction'],
             ],
         ]);
+        register_rest_route($namespace, '/reading', [
+            [
+                'methods' => WP_REST_Server::CREATABLE,
+                'callback' => [$this, 'rest_add_pages'],
+                'pin' => [
+                    'required' => true,
+                    'validate_callback' => function($param, $request, $key) {
+                        if(!is_string($param)) return false;
+                        return $request;
+                    },
+                ],
+                'pages' => [
+                    'required' => true,
+                    'validate_callback' => function($param, $request, $key) {
+                        if(!is_int($param)) return false;
+                        return $request;
+                    },
+                ],
+            ],
+        ]);
+        register_rest_route($namespace, '/reading-check', [
+            [
+                'methods' => WP_REST_Server::CREATABLE,
+                'callback' => [$this, 'rest_check_if_already_registered'],
+                'pin' => [
+                    'required' => true,
+                    'validate_callback' => function($param, $request, $key) {
+                        if(!is_string($param)) return false;
+                        return $request;
+                    },
+                ],
+            ],
+        ]);
     }
 
     public function rest_get_texts() {
@@ -582,5 +615,30 @@ class TomoveitRestApi_Routes {
 
             return $admin;
         }
+    }
+
+    public function rest_add_pages($request) {
+        $pin = $request->get_param('pin');
+        $pages = $request->get_param('pages');
+        $date = date('Y-m-d');
+
+        $table = 'toreadit_reading';
+
+        global $wpdb;
+        $wpdb->insert($table, array(
+            'pages' => $pages,
+            'pin' => $pin,
+            'class' => '6A',
+            'created_at' => $date,
+        ));
+    }
+
+    public function rest_check_if_already_registered($request) {
+        $pin = $request->get_param('pin');
+        global $wpdb;
+        $table = 'toreadit_reading';
+        $date = date('Y-m-d');
+        $result = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table WHERE pin='%s' AND created_at='%s';", $pin, $date));
+        return count($result) > 0;
     }
 }

@@ -5,7 +5,7 @@ $gap: .5*$char-w;
 $n-char: 4;
 $in-w: $n-char*($char-w + $gap);
 
-input {
+.input-field {
   color: $color-blue;
   display: block;
   border: none;

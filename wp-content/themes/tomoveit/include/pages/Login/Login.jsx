@@ -53,7 +53,7 @@ const Login = () => {
     if (awaitActivities && awaitRunningActivities && awaitAuth) {
       setLoading(false);
       if (firstLogin) history.push('/welcome');
-      else history.push('/activities');
+      else history.push('/läsning');
     }
   }, [awaitActivities, awaitRunningActivities, awaitAuth]);
 

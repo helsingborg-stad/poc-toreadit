@@ -1,0 +1,33 @@
+@import '../../scss/colors';
+@import '../../scss/config';
+
+.reading-input {
+  &__input {
+    width: 100%;
+
+    color: $color-blue;
+    display: block;
+    border: none;
+    padding: 0;
+    border-bottom: 3px solid $color-blue;
+    margin-bottom: 1rem;
+
+    font-size: 2rem;
+
+    &:focus {
+      outline: none;
+      color: $color-blue;
+    }
+
+    select {
+      color: $color-blue;
+    }
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+}

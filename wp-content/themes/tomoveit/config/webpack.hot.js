@@ -37,6 +37,7 @@ module.exports = merge(common, {
     writeToDisk: true,
     overlay: true,
     open: false,
+    disableHostCheck: true,
     allowedHosts: [
       'toreadit.test',
     ],

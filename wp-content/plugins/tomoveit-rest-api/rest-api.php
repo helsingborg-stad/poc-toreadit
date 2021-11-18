@@ -518,8 +518,8 @@ class TomoveitRestApi_Routes {
     public function check_pin($pin) {
         $args = array(
             'numberposts'	=> 1,
-            'post_type'		=> 'armbands',
-            'meta_key'		=> 'armbands_pin_code',
+            'post_type'		=> 'students',
+            'meta_key'		=> 'students_pin_code',
             'meta_value'	=> $pin
         );
 
@@ -530,8 +530,8 @@ class TomoveitRestApi_Routes {
     public function find_if_admin($pin) {
         $args = array(
             'numberposts'	=> 1,
-            'post_type'		=> 'armbands',
-            'meta_key'		=> 'armbands_pin_code',
+            'post_type'		=> 'students',
+            'meta_key'		=> 'students_pin_code',
             'meta_value'	=> $pin
         );
 
@@ -540,7 +540,7 @@ class TomoveitRestApi_Routes {
         if(empty($the_query->posts)) {
             return false;
         } else {
-            $admin = get_field('armbands_admin', $the_query->posts[0]->ID);
+            $admin = get_field('students_admin', $the_query->posts[0]->ID);
 
             return $admin;
         }
@@ -566,11 +566,11 @@ class TomoveitRestApi_Routes {
     public function get_student_class($pin) {
         $posts = get_posts(array(
             'numberposts'	=> -1,
-            'post_type'		=> 'armbands',
-            'meta_key'		=> 'armbands_pin_code',
+            'post_type'		=> 'students',
+            'meta_key'		=> 'students_pin_code',
             'meta_value'	=> $pin,
         ));
-        $class = get_field('armbands_class', $posts[0]->ID);
+        $class = get_field('students_class', $posts[0]->ID);
         return $class;
     }
 

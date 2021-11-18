@@ -25,7 +25,7 @@ const ReadingInput = () => {
       pin: pin,
     },
     ).then((response) => {
-      if (response.data) {
+      if (response.data || admin) {
         history.push('/activities');
       }
     }, (error) => {
@@ -41,7 +41,7 @@ const ReadingInput = () => {
     e.preventDefault();
     console.log(pages);
 
-    axios.post('https://toreadit.test/wp-json/TomoveitRestApi/v1/reading', {
+    axios.post('http://toreadit.test/wp-json/TomoveitRestApi/v1/reading', {
       pin: pin,
       pages: pages,
     },

@@ -32,35 +32,6 @@ class TomoveitRestApi_Routes {
                 ],
             ],
         ]);
-        register_rest_route($namespace, '/adminData', [
-            [
-                'methods' => WP_REST_Server::CREATABLE,
-                'callback' => [$this, 'rest_get_admin_data'],
-                'args' => [
-                    'pin' => [
-                        'required' => true,
-                        'validate_callback' => function($param, $request, $key) {
-                            if(!is_string($param)) return false;
-                            return $request;
-                        },
-                    ],
-                    'start_date' => [
-                        'required' => true,
-                        'validate_callback' => function($param, $request, $key) {
-                            if(!is_string($param)) return false;
-                            return $request;
-                        },
-                    ],
-                    'end_date' => [
-                        'required' => true,
-                        'validate_callback' => function($param, $request, $key) {
-                            if(!is_string($param)) return false;
-                            return $request;
-                        },
-                    ],
-                ],
-            ],
-        ]);
         register_rest_route($namespace, '/login', [
             [
                 'methods' => WP_REST_Server::CREATABLE,
@@ -175,12 +146,6 @@ class TomoveitRestApi_Routes {
                 ],
             ],
         ]);
-        register_rest_route($namespace, '/resetIntroduction', [
-            [
-                'methods' => WP_REST_Server::READABLE,
-                'callback' => [$this, 'rest_reset_introduction'],
-            ],
-        ]);
         register_rest_route($namespace, '/reading', [
             [
                 'methods' => WP_REST_Server::CREATABLE,
@@ -278,63 +243,43 @@ class TomoveitRestApi_Routes {
         return $result;
     }
 
-    public function rest_get_admin_data($request) {
-        // remove this?
-    }
-
     public function rest_login($request) {
-        global $wpdb;
-        $table = 'tomoveit_activity';
-
         $pin = $request->get_param('pin');
-        $mac = $this->find_mac($pin);
-        if(!$mac) return ([
+
+        global $wpdb;
+        $table = 'toreadit_activity';
+
+        if($this->check_pin($pin)) return ([
            'error' => 'Fel pinkod'
         ]);
 
-        $queryCheck = $wpdb->get_results("SELECT * FROM $table WHERE mac = '$mac'");
+        $queryCheck = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table WHERE pin = '%s';", $pin));
 
         if (count($queryCheck) == 0) {
             $wpdb->insert($table, array(
-                'mac' => $mac,
+                'pin' => $pin,
                 'selected_activity' => '',
                 'used_activities' => '',
                 'first_time' => 1,
             ));
         }
 
-        $query = $wpdb->get_results("SELECT first_time FROM $table WHERE mac = '$mac'");
-        $first_login = NULL;
-        foreach($query as $item) {
-            $first_login = $item->first_time;
-        }
-
-        if($first_login == '1') {
-            $wpdb->query($wpdb->prepare("UPDATE $table SET first_time = 0 WHERE mac = '$mac'"));
-        }
         $admin = $this->find_if_admin($pin);
-
-        $res = array(
-            "firstTime" => $first_login,
-            "admin" => $admin,
-        );
-
-        if($mac) return $res;
-        else return 'no';
+        return ['admin' => $admin];
     }
 
     public function rest_get_activities($request) {
         $pin = $request->get_param('pin');
-        $result = array();
+        $result = [];
         global $wpdb;
-        $mac = $this->find_mac($pin);
-        $table_daily = 'tomoveit_daily_posts';
-        $table_activity = 'tomoveit_activity';
 
-        $query = $wpdb->prepare("SELECT post1, post2, post3 FROM $table_daily WHERE id = 1");
+        $table_daily = 'toreadit_daily_posts';
+        $table_activity = 'toreadit_activity';
+
+        $query = $wpdb->prepare("SELECT post1, post2, post3 FROM $table_daily WHERE id = 1;");
         $query_result = $wpdb->get_row($query, ARRAY_A);
 
-        $query = $wpdb->prepare("SELECT used_activities FROM $table_activity WHERE mac = '$mac'");
+        $query = $wpdb->prepare("SELECT used_activities FROM $table_activity WHERE pin = '%s';", $pin);
         $query_result_used = $wpdb->get_row($query);
 
         foreach ($query_result as $id) {
@@ -414,15 +359,14 @@ class TomoveitRestApi_Routes {
     public function rest_set_activity($request){
         global $wpdb;
         $pin = $request->get_param('pin');
-        $mac = $this->find_mac($pin);
 
         $post = $request->get_param('selectedPostId');
 
         if($this->check_if_not_valid_post($post)) return false;
 
-        $table = 'tomoveit_activity';
+        $table = 'toreadit_activity';
         $data = array('selected_activity'=> $post);
-        $where = array('mac' => $mac);
+        $where = array('pin' => $pin);
         $wpdb->update( $table, $data, $where);
 
         $get_selected_post_data = $this->prepare_post_data($post);
@@ -433,7 +377,7 @@ class TomoveitRestApi_Routes {
     public function check_if_not_valid_post($postId){
         global $wpdb;
 
-        $table_daily = 'tomoveit_daily_posts';
+        $table_daily = 'toreadit_daily_posts';
 
         $query = $wpdb->prepare("SELECT post1, post2, post3 FROM $table_daily WHERE id = 1");
         $query_result = $wpdb->get_row($query, ARRAY_A);
@@ -447,11 +391,10 @@ class TomoveitRestApi_Routes {
     public function rest_reset_activity($request){
         global $wpdb;
         $pin = $request->get_param('pin');
-        $mac = $this->find_mac($pin);
 
-        $table = 'tomoveit_activity';
+        $table = 'toreadit_activity';
         $data = array('selected_activity'=> '');
-        $where = array('mac' => $mac);
+        $where = array('pin' => $pin);
         $wpdb->update( $table, $data, $where);
 
         return 200;
@@ -459,11 +402,10 @@ class TomoveitRestApi_Routes {
 
     public function rest_running_activity($request) {
         global $wpdb;
-        $table = 'tomoveit_activity';
+        $table = 'toreadit_activity';
         $pin = $request->get_param('pin');
-        $mac = $this->find_mac($pin);
 
-        $query = $wpdb->get_results("SELECT selected_activity FROM $table WHERE mac = '$mac'");
+        $query = $wpdb->get_results("SELECT selected_activity FROM $table WHERE pin='$pin'");
 
         $post_id = NULL;
         foreach($query as $item) {
@@ -513,7 +455,7 @@ class TomoveitRestApi_Routes {
             array_push($postIds, $postId );
         }
 
-        $table = 'tomoveit_daily_posts';
+        $table = 'toreadit_daily_posts';
         $data = array(
             'post1'=> $postIds[0],
             'post2'=> $postIds[1],
@@ -522,7 +464,7 @@ class TomoveitRestApi_Routes {
         $where = array('id' => 1);
         $wpdb->update( $table, $data, $where);
 
-        $table = 'tomoveit_activity';
+        $table = 'toreadit_activity';
         $wpdb->query($wpdb->prepare("UPDATE $table SET selected_activity='', used_activities=''"));
 
     }
@@ -530,22 +472,13 @@ class TomoveitRestApi_Routes {
     public function rest_set_done_activity($request) {
         global $wpdb;
         $pin = $request->get_param('pin');
-        $mac = $this->find_mac($pin);
         $post_id = $request->get_param('postId');
 
-        $table = 'tomoveit_activity';
+        $table = 'toreadit_activity';
 
         //$wpdb->query($wpdb->prepare("UPDATE $table SET used_activities = CONCAT(used_activities,'".",".$post_id."') WHERE mac = '$mac'"));
-        $wpdb->query($wpdb->prepare("UPDATE $table SET used_activities = CONCAT(used_activities, ' ', $post_id) WHERE mac = '$mac'"));
-        $wpdb->query($wpdb->prepare("UPDATE $table SET selected_activity = '' WHERE mac = '$mac'"));
-    }
-
-    public function rest_reset_introduction() {
-        global $wpdb;
-        $table = 'tomoveit_activity';
-
-        $wpdb->query($wpdb->prepare("UPDATE $table SET first_time=1"));
-        return new WP_REST_Response(NULL, 200);
+        $wpdb->query($wpdb->prepare("UPDATE $table SET used_activities = CONCAT(used_activities, ' ', $post_id) WHERE pin = '$pin'"));
+        $wpdb->query($wpdb->prepare("UPDATE $table SET selected_activity = '' WHERE pin = '$pin'"));
     }
 
     public function prepare_post_data($post_id) {
@@ -582,7 +515,7 @@ class TomoveitRestApi_Routes {
         return $result;
     }
 
-    public function find_mac($pin) {
+    public function check_pin($pin) {
         $args = array(
             'numberposts'	=> 1,
             'post_type'		=> 'armbands',
@@ -591,13 +524,7 @@ class TomoveitRestApi_Routes {
         );
 
         $the_query = new WP_Query( $args );
-
-        if(empty($the_query->posts)) {
-            return false;
-        } else {
-            $mac = get_field('armbands_mac_adress', $the_query->posts[0]->ID);
-            return $mac;
-        }
+        return empty($the_query->posts);
     }
 
     public function find_if_admin($pin) {

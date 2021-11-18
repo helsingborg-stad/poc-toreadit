@@ -21,15 +21,7 @@ const Activities = () => {
   const admin = useSelector(state => state.app.admin);
 
   const handleClick = () => {
-    axios.get('https://tomoveit.hbgtest.se/wp-json/TomoveitRestApi/v1/randomize')
-      .then((response) => {
-      }, (error) => {
-        console.log(error);
-      });
-  };
-
-  const handleClickResetIntro = () => {
-    axios.get('http://tomoveit.test/wp-json/TomoveitRestApi/v1/resetIntroduction')
+    axios.get('http://toreadit.test/wp-json/TomoveitRestApi/v1/randomize')
       .then((response) => {
       }, (error) => {
         console.log(error);
@@ -63,9 +55,6 @@ const Activities = () => {
             <div className={style('activities__button-container')}>
               <div className={style('activities__button')}>
                 <RoundButton handleClick={handleClick}/>
-              </div>
-              <div className={style('activities__button')}>
-                <Button whiteColor={true} to={'/introduction'} text={'AKTIVERA INTRO'} handleClick={handleClickResetIntro}/>
               </div>
             </div>
           </>

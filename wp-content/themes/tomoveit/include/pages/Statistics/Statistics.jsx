@@ -122,7 +122,7 @@ const Statistics = () => {
       <div className={ style('statistics__stats')}>
         <h1>{data.total_pages_sum}</h1>
         <h3>Totalt antal lästa sidor hittills</h3>
-        <span>Snyggt jobbat! Du har klarat ditt mål 0 av 5 dagar 👏💪</span>
+        <span>Snyggt jobbat! 👏💪</span>
       </div>
       <div className={ style('statistics__wrapper')}>
         <svg className={ style('statistics__arrow-left')} onClick={handleClickLeft}>

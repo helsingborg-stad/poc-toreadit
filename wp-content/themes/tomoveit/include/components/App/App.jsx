@@ -5,9 +5,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 import configureStore from '../../store/store';
 
-import Home from '../../pages/Home/Home.jsx';
 import Activities from '../../pages/Activities/Activities.jsx';
-import Introduction from '../../pages/Introduction/Introduction.jsx';
 import Login from '../../pages/Login/Login.jsx';
 import Header from '../Header/Header.jsx';
 import SingleActivity from '../../pages/SingleActivity/SingleActivity.jsx';
@@ -28,9 +26,7 @@ const App = () => {
           <Header/>
           <Switch>
             <Route exact path="/" component={Login} />
-            <PrivateRoute path="/welcome" component={Home} />
             <PrivateRoute path="/activities" component={Activities} />
-            <PrivateRoute path="/introduction" component={Introduction} />
             <PrivateRoute path="/activity" component={SingleActivity} />
             <PrivateRoute path="/runningActivity" component={CurrentActivity} />
             <PrivateRoute path="/statistics" component={Statistics} />

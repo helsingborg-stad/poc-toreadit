@@ -19,7 +19,7 @@ const SingleActivity = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const handleClick = () => {
-    axios.post('https://tomoveit.hbgtest.se/wp-json/TomoveitRestApi/v1/setActivity', {
+    axios.post('http://toreadit.test/wp-json/TomoveitRestApi/v1/setActivity', {
       selectedPostId: selectedActivity.postId.toString(),
       pin: pin,
     },

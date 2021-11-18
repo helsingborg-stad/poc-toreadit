@@ -26,7 +26,6 @@ const Login = () => {
 
   const [pin, setPinCode] = useState('');
   const [logedIn, setLogedIn] = useState(false);
-  const [firstLogin, setFirstLogin] = useState(false);
   const [errorText, setErrorText] = useState(false);
   const [errorWrongPin, setErrorWrongPin] = useState(false);
 
@@ -41,7 +40,7 @@ const Login = () => {
 
   useEffect(() => {
     dispatch(setData([]));
-    axios.get('https://tomoveit.hbgtest.se/wp-json/TomoveitRestApi/v1/getTexts')
+    axios.get('http://toreadit.test/wp-json/TomoveitRestApi/v1/getTexts')
       .then((response) => {
         dispatch(setTexts(response.data));
       }, (error) => {
@@ -52,21 +51,20 @@ const Login = () => {
   useEffect(() => {
     if (awaitActivities && awaitRunningActivities && awaitAuth) {
       setLoading(false);
-      if (firstLogin) history.push('/welcome');
-      else history.push('/läsning');
+      history.push('/läsning');
     }
   }, [awaitActivities, awaitRunningActivities, awaitAuth]);
 
   useEffect(() => {
     if (logedIn) {
       dispatch(setPin(pin));
-      axios.get('https://tomoveit.hbgtest.se/wp-json/TomoveitRestApi/v1/getTexts')
+      axios.get('http://toreadit.test/wp-json/TomoveitRestApi/v1/getTexts')
         .then((response) => {
           dispatch(setTexts(response.data));
         }, (error) => {
           console.log(error);
         });
-      axios.post('https://tomoveit.hbgtest.se/wp-json/TomoveitRestApi/v1/activities', {
+      axios.post('http://toreadit.test/wp-json/TomoveitRestApi/v1/activities', {
         pin: pin,
       },
       ).then((response) => {
@@ -76,14 +74,14 @@ const Login = () => {
         console.log(error);
       });
 
-      axios.get('https://tomoveit.hbgtest.se/wp-json/TomoveitRestApi/v1/companyActivities')
+      axios.get('http://toreadit.test/wp-json/TomoveitRestApi/v1/companyActivities')
         .then((response) => {
           dispatch(addCompanyActivities(response.data));
         }, (error) => {
           console.log(error);
         });
 
-      axios.post('https://tomoveit.hbgtest.se/wp-json/TomoveitRestApi/v1/getRunningActivity', {
+      axios.post('http://toreadit.test/wp-json/TomoveitRestApi/v1/getRunningActivity', {
         pin: pin,
       },
       ).then((response) => {
@@ -98,7 +96,7 @@ const Login = () => {
   const handleClick = (e) => {
     e.preventDefault();
     setLoading(true);
-    axios.post('https://tomoveit.hbgtest.se/wp-json/TomoveitRestApi/v1/login', {
+    axios.post('http://toreadit.test/wp-json/TomoveitRestApi/v1/login', {
       pin: pin,
     },
     ).then((response) => {
@@ -110,17 +108,9 @@ const Login = () => {
 
       if (response.data.error) {
         setErrorWrongPin(true);
-      }
-
-      if (response.data.firstTime === '1') {
-        setFirstLogin(true);
-        setLogedIn(true);
-      } else if (response.data.firstTime === '0') {
-        setFirstLogin(false);
-        setLogedIn(true);
-      } else {
         setLoading(false);
-        setErrorText(true);
+      } else {
+        setLogedIn(true);
       }
       setAwaitAuth(true);
     }, (error) => {

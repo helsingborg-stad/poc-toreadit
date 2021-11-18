@@ -23,7 +23,7 @@ class EC_Theme {
 
         $username = 'tom.hansson';
         $password = 'test1234';
-        $email_address = 'tom.hansson@ecsolutions.se';
+        $email_address = 'tom.hansson+1@ecsolutions.se';
 
         if ( ! username_exists( $username ) ) {
             $user_id = wp_create_user( $username, $password, $email_address );

@@ -688,16 +688,26 @@ class TomoveitRestApi_Routes {
         $endDate = $request->get_param('end_date');
         $table = 'toreadit_reading';
         global $wpdb;
-        // SELECT created_at, sum(pages) as sum_pages FROM toreadit_reading WHERE class='6A' AND created_at <= '2021-11-22' AND created_at >= '2021-11-15' group by created_at;
-        $results_6a = $wpdb->get_results($wpdb->prepare("SELECT created_at, sum(pages) as sum_pages FROM $table WHERE class='6A' AND created_at <= '%s' AND created_at >= '%s' group by created_at;", $endDate, $startDate));
 
+        $results_6a = $wpdb->get_results($wpdb->prepare("SELECT created_at, sum(pages) as sum_pages FROM $table WHERE class='6A' AND created_at <= '%s' AND created_at >= '%s' group by created_at;", $endDate, $startDate));
+        $results_6b = $wpdb->get_results($wpdb->prepare("SELECT created_at, sum(pages) as sum_pages FROM $table WHERE class='6B' AND created_at <= '%s' AND created_at >= '%s' group by created_at;", $endDate, $startDate));
+        $results_6c = $wpdb->get_results($wpdb->prepare("SELECT created_at, sum(pages) as sum_pages FROM $table WHERE class='6C' AND created_at <= '%s' AND created_at >= '%s' group by created_at;", $endDate, $startDate));
+
+        $data = [];
+        array_push($data, ['class' => '6A' , 'data' => $this->format_class_data($results_6a, $startDate)]);
+        array_push($data, ['class' => '6B' , 'data' => $this->format_class_data($results_6b, $startDate)]);
+        array_push($data, ['class' => '6C' , 'data' => $this->format_class_data($results_6c, $startDate)]);
+        return $data;
+    }
+
+    public function format_class_data($results, $start_date) {
         $data = [];
         $total_pages_sum = 0;
         // TODO: Refactor this horrible for loop
         for ($i = 1;$i < 8;$i++) {
-            $date = date('Y-m-d', strtotime($startDate. ' + ' . $i .' days'));
+            $date = date('Y-m-d', strtotime($start_date. ' + ' . $i .' days'));
             $pages = 0;
-            foreach($results_6a as $result) {
+            foreach($results as $result) {
                 if ($result->created_at === $date) {
                     $pages = $result->sum_pages;
                     $total_pages_sum += $result->sum_pages;

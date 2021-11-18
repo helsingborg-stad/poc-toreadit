@@ -21,7 +21,7 @@ const ReadingInput = () => {
   const pin = useSelector(state => state.app.pin);
 
   useEffect(() => {
-    axios.post('https://toreadit.test/wp-json/TomoveitRestApi/v1/reading-check', {
+    axios.post('https://toreadit.hbgtest.se/wp-json/TomoveitRestApi/v1/reading-check', {
       pin: pin,
     },
     ).then((response) => {
@@ -41,7 +41,7 @@ const ReadingInput = () => {
     e.preventDefault();
     console.log(pages);
 
-    axios.post('http://toreadit.test/wp-json/TomoveitRestApi/v1/reading', {
+    axios.post('https://toreadit.hbgtest.se/wp-json/TomoveitRestApi/v1/reading', {
       pin: pin,
       pages: pages,
     },

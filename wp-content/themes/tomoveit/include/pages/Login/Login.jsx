@@ -40,7 +40,7 @@ const Login = () => {
 
   useEffect(() => {
     dispatch(setData([]));
-    axios.get('http://toreadit.test/wp-json/TomoveitRestApi/v1/getTexts')
+    axios.get('https://toreadit.hbgtest.se/wp-json/TomoveitRestApi/v1/getTexts')
       .then((response) => {
         dispatch(setTexts(response.data));
       }, (error) => {
@@ -58,13 +58,13 @@ const Login = () => {
   useEffect(() => {
     if (logedIn) {
       dispatch(setPin(pin));
-      axios.get('http://toreadit.test/wp-json/TomoveitRestApi/v1/getTexts')
+      axios.get('https://toreadit.hbgtest.se/wp-json/TomoveitRestApi/v1/getTexts')
         .then((response) => {
           dispatch(setTexts(response.data));
         }, (error) => {
           console.log(error);
         });
-      axios.post('http://toreadit.test/wp-json/TomoveitRestApi/v1/activities', {
+      axios.post('https://toreadit.hbgtest.se/wp-json/TomoveitRestApi/v1/activities', {
         pin: pin,
       },
       ).then((response) => {
@@ -74,14 +74,14 @@ const Login = () => {
         console.log(error);
       });
 
-      axios.get('http://toreadit.test/wp-json/TomoveitRestApi/v1/companyActivities')
+      axios.get('https://toreadit.hbgtest.se/wp-json/TomoveitRestApi/v1/companyActivities')
         .then((response) => {
           dispatch(addCompanyActivities(response.data));
         }, (error) => {
           console.log(error);
         });
 
-      axios.post('http://toreadit.test/wp-json/TomoveitRestApi/v1/getRunningActivity', {
+      axios.post('https://toreadit.hbgtest.se/wp-json/TomoveitRestApi/v1/getRunningActivity', {
         pin: pin,
       },
       ).then((response) => {
@@ -96,7 +96,7 @@ const Login = () => {
   const handleClick = (e) => {
     e.preventDefault();
     setLoading(true);
-    axios.post('http://toreadit.test/wp-json/TomoveitRestApi/v1/login', {
+    axios.post('https://toreadit.hbgtest.se/wp-json/TomoveitRestApi/v1/login', {
       pin: pin,
     },
     ).then((response) => {

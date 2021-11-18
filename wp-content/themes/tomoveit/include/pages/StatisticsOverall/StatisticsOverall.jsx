@@ -22,7 +22,7 @@ const StatisticsOverall = () => {
     let monday = moment(date).startOf('isoWeek');
     let sunday = moment(date).startOf('isoWeek').add(6, 'days');
 
-    axios.post('https://toreadit.test/wp-json/TomoveitRestApi/v1/classes-data', {
+    axios.post('https://toreadit.hbgtest.se/wp-json/TomoveitRestApi/v1/classes-data', {
       pin: pin,
       start_date: monday,
       end_date: sunday,

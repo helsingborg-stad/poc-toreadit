@@ -21,7 +21,7 @@ const Activities = () => {
   const admin = useSelector(state => state.app.admin);
 
   const handleClick = () => {
-    axios.get('http://toreadit.test/wp-json/TomoveitRestApi/v1/randomize')
+    axios.get('https://toreadit.hbgtest.se/wp-json/TomoveitRestApi/v1/randomize')
       .then((response) => {
       }, (error) => {
         console.log(error);

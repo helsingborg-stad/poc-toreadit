@@ -22,7 +22,7 @@ const CurrentActivity = () => {
   const [showModal, setShowModal] = useState(false);
 
   const handleClickOk = () => {
-    axios.post('http://toreadit.test/wp-json/TomoveitRestApi/v1/setDoneActivity', {
+    axios.post('https://toreadit.hbgtest.se/wp-json/TomoveitRestApi/v1/setDoneActivity', {
       postId: runningActivityData.postId,
       pin: pin,
     },
@@ -34,7 +34,7 @@ const CurrentActivity = () => {
   };
 
   const handleClickNo = () => {
-    axios.post('http://toreadit.test/wp-json/TomoveitRestApi/v1/resetActivity', {
+    axios.post('https://toreadit.hbgtest.se/wp-json/TomoveitRestApi/v1/resetActivity', {
       pin: pin,
     },
     ).then(() => {

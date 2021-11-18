@@ -25,7 +25,7 @@ const Statistics = () => {
 
     setLoading(true);
 
-    axios.post('https://toreadit.test/wp-json/TomoveitRestApi/v1/data', {
+    axios.post('https://toreadit.hbgtest.se/wp-json/TomoveitRestApi/v1/data', {
       pin: pin,
       start_date: monday,
       end_date: sunday,

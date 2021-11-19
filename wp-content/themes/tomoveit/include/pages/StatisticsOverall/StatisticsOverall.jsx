@@ -8,6 +8,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 /* eslint-enable */
 import moment from 'moment';
 import axios from 'axios';
+import { ConfettiCanvas } from 'react-raining-confetti';
 
 const style = classNames.bind(styles);
 
@@ -37,7 +38,6 @@ const StatisticsOverall = () => {
 
   useEffect(() => {
     if (!loding) {
-      console.log(data);
       const chart = createChart(data);
       const chart2 = createChart2(data);
       const chart3 = createChart3(data);
@@ -51,7 +51,6 @@ const StatisticsOverall = () => {
 
   const createChart = (data) => {
     const chartElement = (document.getElementById('StatisticContainer')).getContext('2d');
-    console.log(data);
     return new Chart(chartElement, {
       type: 'bar',
       data: {
@@ -251,6 +250,9 @@ const StatisticsOverall = () => {
 
   return (
     <div className={ style('statistics')}>
+      <div className={style('statistics__confetti')}>
+        <ConfettiCanvas active={true} fadingMode="LIGHT" stopAfterMs={10000} />
+      </div>
       <div className={ style('statistics__wrapper')}>
         <svg className={ style('statistics__arrow-left')} onClick={handleClickLeft}>
           <use xlinkHref={ 'wp-content/themes/tomoveit/dist/spritemap.svg#order-icon-arrow-left' } />
@@ -262,9 +264,9 @@ const StatisticsOverall = () => {
       </div>
       <div className={ style('statistics__stats')}>
         <h1>Klass 6A</h1>
-        <h1>{data.total_pages_sum}</h1>
+        <h1>{data[0] ? data[0].data.total_pages_sum : 0}</h1>
         <h3>Totalt antal lästa sidor hittills</h3>
-        <span>Snyggt jobbat! Du har klarat ditt mål 0 av 5 dagar 👏💪</span>
+        <span>Snyggt jobbat!👏💪</span>
       </div>
       <div className={ style('statistics__chart-container')}>
         <canvas className={ style('statistics__chart')} id="StatisticContainer">
@@ -272,9 +274,9 @@ const StatisticsOverall = () => {
       </div>
       <div className={ style('statistics__stats')}>
         <h1>Klass 6B</h1>
-        <h1>{data.total_pages_sum}</h1>
+        <h1>{data[1] ? data[1].data.total_pages_sum : 0}</h1>
         <h3>Totalt antal lästa sidor hittills</h3>
-        <span>Snyggt jobbat! Du har klarat ditt mål 0 av 5 dagar 👏💪</span>
+        <span>Snyggt jobbat!👏💪</span>
       </div>
       <div className={ style('statistics__chart-container')}>
         <canvas className={ style('statistics__chart')} id="StatisticContainer2">
@@ -282,9 +284,9 @@ const StatisticsOverall = () => {
       </div>
       <div className={ style('statistics__stats')}>
         <h1>Klass 6C</h1>
-        <h1>{data.total_pages_sum}</h1>
+        <h1>{data[2] ? data[2].data.total_pages_sum : 0}</h1>
         <h3>Totalt antal lästa sidor hittills</h3>
-        <span>Snyggt jobbat! Du har klarat ditt mål 0 av 5 dagar 👏💪</span>
+        <span>Snyggt jobbat!👏💪</span>
       </div>
       <div className={ style('statistics__chart-container')}>
         <canvas className={ style('statistics__chart')} id="StatisticContainer3">

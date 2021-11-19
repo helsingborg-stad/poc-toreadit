@@ -10,4 +10,12 @@
     align-items: center;
     justify-content: center;
   }
+
+  &__buttons {
+    display: flex;
+
+    :first-child {
+      margin-right: 1rem;
+    }
+  }
 }

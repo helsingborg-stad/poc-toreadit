@@ -119,14 +119,17 @@ const Login = () => {
   };
 
   return (
-    <div className={ style('login')}>
+    <div className={style('login')}>
       <Container>
         <h3>Skriv in din PIN-kod:</h3>
         {(errorText || errorWrongPin) && <div className={ style('login__error')}><h3>😩</h3><h3>{ errorWrongPin ? 'Fel pinkod.' : 'Nånting funkar inte just nu. Prova ladda om sidan.'}</h3></div>}
         <BottomContainer>
           <form onSubmit={handleClick} className={ style('login__form')}>
             <Input handleChange={handleChange} />
-            <Button type='submit' loading={loading} to={'/welcome'} text={'LOGGA IN'}/>
+            <div className={style('login__buttons')}>
+              <Button type='submit' loading={loading} to={'/welcome'} text={'LOGGA IN'}/>
+              <Button loading={false} to={'/klass-statistik'} text={'GÅ TILL STATISTIK'}/>
+            </div>
           </form>
         </BottomContainer>
       </Container>

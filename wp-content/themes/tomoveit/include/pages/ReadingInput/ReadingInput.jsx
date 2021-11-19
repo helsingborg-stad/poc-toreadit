@@ -39,8 +39,6 @@ const ReadingInput = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    console.log(pages);
-
     axios.post('https://toreadit.hbgtest.se/wp-json/TomoveitRestApi/v1/reading', {
       pin: pin,
       pages: pages,

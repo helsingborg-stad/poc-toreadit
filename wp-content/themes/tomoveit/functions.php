@@ -23,7 +23,7 @@ class EC_Theme {
     }
 
     public function load_plugin_scripts() {
-            wp_enqueue_script('theme', get_template_directory_uri() . '/dist/bundle.js', [], null, true);
+        wp_enqueue_script('theme', get_template_directory_uri() . '/dist/bundle.js', [], null, true);
     }
 
     public function output_plugin_spritemap() {
@@ -31,7 +31,7 @@ class EC_Theme {
     }
 
     public function register_post_types(){
-        $taxonomies = [  ];
+        $taxonomies = [];
 
         foreach ($taxonomies as $name => $values) {
             register_taxonomy($name, $values['post_types'], $values['options']);

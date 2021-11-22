@@ -37,8 +37,8 @@ const CompanyActivities = () => {
 
   return (
     <div className={style('company-activities')}>
-      <h1>Föreningar i Helsingborg ⭐️</h1>
-      <h3>Här är en lista på föreningar du kan prova</h3>
+      <h1>Recensioner / Besök  ⭐️</h1>
+      <h3>Här hittar du recensioner och besök!</h3>
       <div className={style('company-activities__container')}>
         {cards}
       </div>

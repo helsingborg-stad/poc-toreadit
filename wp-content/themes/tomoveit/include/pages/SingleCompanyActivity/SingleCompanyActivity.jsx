@@ -40,8 +40,7 @@ const SingleCompanyActivities = () => {
         }
         <div className={style('company-single__content')}>
           {
-            data.review_check &&
-            <>
+            data.review_check ? <>
               <p className={style('company-single__text-title')}>Bok</p>
               <p>{replaceLineBreaksWithHTML(data.book)}</p>
               <p className={style('company-single__text-title')}>Författare</p>
@@ -50,22 +49,18 @@ const SingleCompanyActivities = () => {
               <p>{stars()}</p>
               <p className={style('company-single__text-title')}>Vad var bra med boken?</p>
               <p>{replaceLineBreaksWithHTML(data.best)}</p>
+            </> : <>
+              <p className={style('company-single__text-title')}>Namn</p>
+              <p>{replaceLineBreaksWithHTML(data.name)}</p>
+              <p className={style('company-single__text-title')}>Varför läsning?</p>
+              <p>{data.why_reading && replaceLineBreaksWithHTML(data.why_reading)}</p>
+              <p className={style('company-single__text-title')}>Vad läste personen för oss?</p>
+              <p>{data.what_did_they_read && replaceLineBreaksWithHTML(data.what_did_they_read)}</p>
+              <p className={style('company-single__text-title')}>Vad har läsning betytt för personen?</p>
+              <p>{data.meaning && replaceLineBreaksWithHTML(data.meaning)}</p>
+              <p className={style('company-single__text-title')}>Vilken är personens favoritbok?</p>
+              <p>{data.favorite && replaceLineBreaksWithHTML(data.favorite)}</p>
             </>
-          }
-          {
-            !data.review_check &&
-              <>
-                <p className={style('company-single__text-title')}>Namn</p>
-                <p>{replaceLineBreaksWithHTML(data.name)}</p>
-                <p className={style('company-single__text-title')}>Varför läsning?</p>
-                <p>{data.why_reading && replaceLineBreaksWithHTML(data.why_reading)}</p>
-                <p className={style('company-single__text-title')}>Vad läste personen för oss?</p>
-                <p>{data.what_did_they_read && replaceLineBreaksWithHTML(data.what_did_they_read)}</p>
-                <p className={style('company-single__text-title')}>Vad har läsning betytt för personen?</p>
-                <p>{data.meaning && replaceLineBreaksWithHTML(data.meaning)}</p>
-                <p className={style('company-single__text-title')}>Vilken är personens favoritbok?</p>
-                <p>{data.favorite && replaceLineBreaksWithHTML(data.favorite)}</p>
-              </>
           }
           <div className={style('company-single__line')}></div>
           <p className={style('company-single__text-title')}>Denna sida är skapad av:</p>

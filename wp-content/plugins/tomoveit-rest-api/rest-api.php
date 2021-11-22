@@ -333,7 +333,7 @@ class TomoveitRestApi_Routes {
             } else {
                 $review = 0;
             }
-            if (get_field('review_visit_check')) {
+            if ($review) {
                 array_push($activities, (object) [
                     'book' => get_field('review_visit_book', $post->ID),
                     'stars' => get_field('review_visit_stars', $post->ID),

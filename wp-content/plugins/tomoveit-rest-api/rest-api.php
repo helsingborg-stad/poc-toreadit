@@ -322,7 +322,7 @@ class TomoveitRestApi_Routes {
 
         $posts = get_posts([
             'numberposts' => -1,
-            'post_type' => 'activities_company',
+            'post_type' => 'review_visitor',
         ]);
 
         foreach ($posts as $post) {

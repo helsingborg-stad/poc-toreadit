@@ -326,8 +326,9 @@ class TomoveitRestApi_Routes {
         ]);
 
         foreach ($posts as $post) {
-            $review = get_field('review_visit_check');
-            if ($review) {
+            return get_field('review_visit_check');
+
+            if (get_field('review_visit_check')) {
                 array_push($activities, (object) [
                     'book' => get_field('review_visit_book', $post->ID),
                     'stars' => get_field('review_visit_stars', $post->ID),

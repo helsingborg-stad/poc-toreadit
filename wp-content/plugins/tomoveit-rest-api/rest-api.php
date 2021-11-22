@@ -325,9 +325,14 @@ class TomoveitRestApi_Routes {
             'post_type' => 'review_visitor',
         ]);
 
-        foreach ($posts as $post) {
-            return get_field('review_visit_check');
 
+
+        foreach ($posts as $post) {
+            if(get_field('review_visit_check', $post->ID)) {
+                $review = 1;
+            } else {
+                $review = 0;
+            }
             if (get_field('review_visit_check')) {
                 array_push($activities, (object) [
                     'book' => get_field('review_visit_book', $post->ID),
@@ -340,7 +345,7 @@ class TomoveitRestApi_Routes {
                     'image' => get_field('review_visit_image', $post->ID),
                     'author' => get_field('review_visit_author', $post->ID),
                     'video_url' => get_field('review_visit_video_url', $post->ID),
-                    'review_check' => get_field('review_visit_check', $post->ID),
+                    'review_check' => $review,
                 ]);
             } else {
                 array_push($activities, (object) [
@@ -355,7 +360,7 @@ class TomoveitRestApi_Routes {
                     'image' => get_field('review_visit_image', $post->ID),
                     'author' => get_field('review_visit_author', $post->ID),
                     'video_url' => get_field('review_visit_video_url', $post->ID),
-                    'review_check' => get_field('review_visit_check', $post->ID),
+                    'review_check' => $review,
                 ]);
             }
         }

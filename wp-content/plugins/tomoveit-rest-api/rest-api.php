@@ -332,6 +332,13 @@ class TomoveitRestApi_Routes {
                     'book' => get_field('review_visit_book', $post->ID),
                     'stars' => get_field('review_visit_stars', $post->ID),
                     'best' => get_field('review_visit_best', $post->ID),
+                    'title' => html_entity_decode(get_the_title($post->ID)),
+                    'id' => $post->ID,
+                    'short_text' => get_field('review_visit_text', $post->ID),
+                    'name' => get_field('review_visit_name', $post->ID),
+                    'image' => get_field('review_visit_image', $post->ID),
+                    'author' => get_field('review_visit_author', $post->ID),
+                    'video_url' => get_field('review_visit_video_url', $post->ID),
                 ]);
             } else {
                 array_push($activities, (object) [
@@ -339,18 +346,15 @@ class TomoveitRestApi_Routes {
                     'meaning' => get_field('review_visit_meaning', $post->ID),
                     'favorite' => get_field('review_visit_favorit', $post->ID),
                     'why_reading' => get_field('review_visit_why_reading', $post->ID),
+                    'title' => html_entity_decode(get_the_title($post->ID)),
+                    'id' => $post->ID,
+                    'short_text' => get_field('review_visit_text', $post->ID),
+                    'name' => get_field('review_visit_name', $post->ID),
+                    'image' => get_field('review_visit_image', $post->ID),
+                    'author' => get_field('review_visit_author', $post->ID),
+                    'video_url' => get_field('review_visit_video_url', $post->ID),
                 ]);
             }
-
-            array_push($activities, (object)[
-                'title' => html_entity_decode(get_the_title($post->ID)),
-                'id' => $post->ID,
-                'short_text' => get_field('review_visit_text', $post->ID),
-                'name' => get_field('review_visit_name', $post->ID),
-                'image' => get_field('review_visit_image', $post->ID),
-                'author' => get_field('review_visit_author', $post->ID),
-                'video_url' => get_field('review_visit_video_url', $post->ID),
-            ]);
         }
 
         return $activities;

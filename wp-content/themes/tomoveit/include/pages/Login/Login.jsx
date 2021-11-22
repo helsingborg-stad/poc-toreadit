@@ -76,6 +76,7 @@ const Login = () => {
 
       axios.get('https://toreadit.hbgtest.se/wp-json/TomoveitRestApi/v1/companyActivities')
         .then((response) => {
+          console.log(response);
           dispatch(addCompanyActivities(response.data));
         }, (error) => {
           console.log(error);

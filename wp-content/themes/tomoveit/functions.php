@@ -20,6 +20,13 @@ class EC_Theme {
         add_action('wp_enqueue_scripts', [&$this, 'load_plugin_scripts']);
         add_action('output_spritemaps', [&$this, 'output_plugin_spritemap']);
         add_action('init', [&$this, 'register_post_types']);
+
+        /* if (function_exists('acf_add_options_page')) {
+            acf_add_options_page([
+                'page_title' => 'Goals',
+                'menu_title' => 'Goal',
+            ]);
+        } */
     }
 
     public function load_plugin_scripts() {
@@ -29,6 +36,7 @@ class EC_Theme {
     public function output_plugin_spritemap() {
         include_once('dist/spritemap.svg');
     }
+
 
     public function register_post_types(){
         $taxonomies = [];
@@ -66,22 +74,22 @@ class EC_Theme {
                 'menu_icon'              => 'dashicons-hammer',
                 'supports'               => [ 'title', 'editor', 'thumbnail' ],
             ],
-            'activities_company' => [
+            'review_visitor' => [
                 'labels' => [
-                    'name'               => _x('Föreningsaktiviteter', 'post type general name', $this->text_domain),
-                    'singular_name'      => _x('Föreningsaktivitet', 'post type singular name', $this->text_domain),
-                    'menu_name'          => _x('Föreningsaktivitet', 'admin menu', $this->text_domain),
-                    'name_admin_bar'     => _x('Föreningsaktivitet', 'add new on admin bar', $this->text_domain),
-                    'add_new'            => _x('Lägg till', 'föreningsaktivitet', $this->text_domain),
-                    'add_new_item'       => __('Lägg till föreningsaktivitet', $this->text_domain),
-                    'new_item'           => __('Ny föreningsaktivitet', $this->text_domain),
-                    'edit_item'          => __('Redigera föreningsaktivitet', $this->text_domain),
-                    'view_item'          => __('Visa föreningsaktiviteter', $this->text_domain),
-                    'all_items'          => __('Alla Föreningsaktiviteter', $this->text_domain),
-                    'search_items'       => __('Sök föreningsaktivitet', $this->text_domain),
+                    'name'               => _x('Recension / Besök', 'post type general name', $this->text_domain),
+                    'singular_name'      => _x('Recension / Besök', 'post type singular name', $this->text_domain),
+                    'menu_name'          => _x('Recension / Besök', 'admin menu', $this->text_domain),
+                    'name_admin_bar'     => _x('Recension / Besök', 'add new on admin bar', $this->text_domain),
+                    'add_new'            => _x('Lägg till', 'recension / besök', $this->text_domain),
+                    'add_new_item'       => __('Lägg till recension / besök', $this->text_domain),
+                    'new_item'           => __('Ny recension / besök', $this->text_domain),
+                    'edit_item'          => __('Redigera recension / besök', $this->text_domain),
+                    'view_item'          => __('Visa recension / besök', $this->text_domain),
+                    'all_items'          => __('Alla recension / besök', $this->text_domain),
+                    'search_items'       => __('Sök recension / besök', $this->text_domain),
                     'parent_item_colon'  => __('Förälder:', $this->text_domain),
-                    'not_found'          => __('Inga föreningsaktiviteter hittades.', $this->text_domain),
-                    'not_found_in_trash' => __('Inga föreningsaktiviteter hittades i papperskorgen.', $this->text_domain)
+                    'not_found'          => __('Inga recension / besök hittades.', $this->text_domain),
+                    'not_found_in_trash' => __('Inga recension / besök hittades i papperskorgen.', $this->text_domain)
                 ],
                 'public'                 => false,
                 'publicly_queryable'     => true,

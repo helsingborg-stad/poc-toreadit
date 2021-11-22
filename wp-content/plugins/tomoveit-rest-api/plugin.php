@@ -1,9 +1,9 @@
 <?php
 
 /*
-    Plugin Name: Tomoveit restapi
+    Plugin Name: Toreadit restapi
     Plugin URI: https://ecsolutions.se
-    Description: Ett plugin för restapi till tomoveit.
+    Description: Ett plugin för restapi till Toreadit.
     Version: 1.0
     Author: EC Solutions AB
     Author URI: http://ecsolutions.se

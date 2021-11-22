@@ -326,30 +326,30 @@ class TomoveitRestApi_Routes {
         ]);
 
         foreach ($posts as $post) {
+            $review = get_field('review_visit_check');
+            if ($review) {
+                array_push($activities, (object) [
+                    'book' => get_field('review_visit_book', $post->ID),
+                    'stars' => get_field('review_visit_stars', $post->ID),
+                    'best' => get_field('review_visit_best', $post->ID),
+                ]);
+            } else {
+                array_push($activities, (object) [
+                    'what_did_they_read' => get_field('review_visit_what_did_they_read', $post->ID),
+                    'meaning' => get_field('review_visit_meaning', $post->ID),
+                    'favorite' => get_field('review_visit_favorit', $post->ID),
+                    'why_reading' => get_field('review_visit_why_reading', $post->ID),
+                ]);
+            }
+
             array_push($activities, (object)[
                 'title' => html_entity_decode(get_the_title($post->ID)),
                 'id' => $post->ID,
-                'cardText' => get_field('company_card_text', $post->ID),
-                'videoUrl' => get_field('company_video_url', $post->ID),
-                'videoText' => get_field('company_video_text', $post->ID),
-                'description' => get_field('company_description', $post->ID),
-                'who' => get_field('company_who', $post->ID),
-                'needed' => get_field('company_needed', $post->ID),
-                'when' => get_field('company_when', $post->ID),
-                'howMany' => get_field('company_how_many', $post->ID),
-                'friends' => get_field('company_friend', $post->ID),
-                'address' => get_field('company_where', $post->ID),
-                'image' => get_field('company_image', $post->ID),
-                'author' => get_field('company_author', $post->ID),
-                'published' => get_the_date('d M Y', $post->ID),
-                'link' => get_field('company_link', $post->ID),
-                'directions' => get_field('company_directions', $post->ID),
-                'addressLink' => get_field('company_address_link', $post->ID),
-                'imageUrl1' => get_field('company_image_1', $post->ID),
-                'imageUrl2' => get_field('company_image_2', $post->ID),
-                'imageUrl3' => get_field('company_image_3', $post->ID),
-                'imageUrl4' => get_field('company_image_4', $post->ID),
-                'imageUrl5' => get_field('company_image_5', $post->ID),
+                'short_text' => get_field('review_visit_text', $post->ID),
+                'name' => get_field('review_visit_name', $post->ID),
+                'image' => get_field('review_visit_image', $post->ID),
+                'author' => get_field('review_visit_author', $post->ID),
+                'video_url' => get_field('review_visit_video_url', $post->ID),
             ]);
         }
 
@@ -466,7 +466,6 @@ class TomoveitRestApi_Routes {
 
         $table = 'toreadit_activity';
         $wpdb->query($wpdb->prepare("UPDATE $table SET selected_activity='', used_activities=''"));
-
     }
 
     public function rest_set_done_activity($request) {
@@ -621,9 +620,9 @@ class TomoveitRestApi_Routes {
         $results_6c = $wpdb->get_results($wpdb->prepare("SELECT created_at, sum(pages) as sum_pages FROM $table WHERE class='6C' AND created_at <= '%s' AND created_at >= '%s' group by created_at;", $endDate, $startDate));
 
         $data = [];
-        array_push($data, ['class' => '6A' , 'data' => $this->format_class_data($results_6a, $startDate)]);
-        array_push($data, ['class' => '6B' , 'data' => $this->format_class_data($results_6b, $startDate)]);
-        array_push($data, ['class' => '6C' , 'data' => $this->format_class_data($results_6c, $startDate)]);
+        array_push($data, ['class' => '6A' , 'data' => $this->format_class_data($results_6a, $startDate), 'goal' => 1000]);
+        array_push($data, ['class' => '6B' , 'data' => $this->format_class_data($results_6b, $startDate), 'goal' => 1000]);
+        array_push($data, ['class' => '6C' , 'data' => $this->format_class_data($results_6c, $startDate), 'goal' => 1000]);
         return $data;
     }
 
@@ -642,7 +641,6 @@ class TomoveitRestApi_Routes {
             }
             array_push($data, $pages);
         }
-
         return ['pages_array' => $data, 'total_pages_sum' => $total_pages_sum];
     }
 }

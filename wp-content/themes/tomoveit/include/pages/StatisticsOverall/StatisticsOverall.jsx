@@ -8,7 +8,6 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 /* eslint-enable */
 import moment from 'moment';
 import axios from 'axios';
-import { ConfettiCanvas } from 'react-raining-confetti';
 
 const style = classNames.bind(styles);
 
@@ -224,7 +223,6 @@ const StatisticsOverall = () => {
           },
         },
         plugins: {
-          // Change options for ALL labels of THIS CHART
           datalabels: {
             anchor: 'end',
             align: 'top',
@@ -250,9 +248,6 @@ const StatisticsOverall = () => {
 
   return (
     <div className={ style('statistics')}>
-      <div className={style('statistics__confetti')}>
-        <ConfettiCanvas active={true} fadingMode="LIGHT" stopAfterMs={10000} />
-      </div>
       <div className={ style('statistics__wrapper')}>
         <svg className={ style('statistics__arrow-left')} onClick={handleClickLeft}>
           <use xlinkHref={ 'wp-content/themes/tomoveit/dist/spritemap.svg#order-icon-arrow-left' } />

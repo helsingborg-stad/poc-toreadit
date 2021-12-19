@@ -66,7 +66,7 @@ const ReadingInput = () => {
     ],
     }
     ).then((response) => {
-      console.log(response);
+      history.push('/activities');
     }, (error) => {
       console.log(error);
     });
@@ -90,8 +90,10 @@ const ReadingInput = () => {
             <input className={style('reading-input__input')} type='number' value={goal6B} onChange={(e) => setGoal6B(e.target.value)}/>
             <h2>Registrera mål för klass 6C</h2>
             <input className={style('reading-input__input')} type='number' value={goal6C} onChange={(e) => setGoal6C(e.target.value)}/>
-            <Button loading={false} to={'/activities'} text={'Gå vidare'}/>
-            <Button loading={false} to={'/activities'} text={'Spara'} handleClick={saveGoals}/>
+            <div className={style('reading-input__admin-buttons')}>
+              <Button loading={false} to={'/activities'} text={'Gå vidare'}/>
+              <Button loading={false} to={'/activities'} text={'Spara'} handleClick={saveGoals}/>
+            </div>
           </div>
         }
       </Container>

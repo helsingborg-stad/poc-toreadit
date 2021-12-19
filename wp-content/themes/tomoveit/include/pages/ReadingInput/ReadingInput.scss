@@ -30,4 +30,13 @@
     justify-content: center;
     flex-direction: column;
   }
+
+  &__admin-buttons {
+    display: flex;
+    flex-direction: row;
+
+    :first-child {
+      margin-right: 1rem;
+    }
+  }
 }

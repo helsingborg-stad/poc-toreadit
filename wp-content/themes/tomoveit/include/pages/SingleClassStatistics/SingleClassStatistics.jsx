@@ -125,9 +125,9 @@ const SingleClassStatistics = (props) => {
 
   return (
     <div className={ style('statistics')}>
-      { (data.total_pages_sum >= data.goal) &&
+      { (data.data && (data.data.total_pages_sum >= data.goal)) &&
         <div className={style('statistics__confetti')}>
-          <ConfettiCanvas active={false} fadingMode="LIGHT" stopAfterMs={10000}/>
+          <ConfettiCanvas active={true} fadingMode="LIGHT" stopAfterMs={10000}/>
         </div>
       }
       <div className={ style('statistics__wrapper')}>
@@ -141,8 +141,8 @@ const SingleClassStatistics = (props) => {
       </div>
       <div className={ style('statistics__stats')}>
         <h1>Klass {props.class}</h1>
-        <h1>{data.data ? data.total_pages_sum : 0}</h1>
         <h3>Totalt antal lästa sidor hittills</h3>
+        <h1>{data.data ? data.data.total_pages_sum : 0}</h1>
         <span>Snyggt jobbat!👏💪</span>
       </div>
       <div className={ style('statistics__chart-container')}>

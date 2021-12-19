@@ -34,6 +34,17 @@ const ReadingInput = () => {
     }, (error) => {
       console.log(error);
     });
+
+    if (admin) {
+      axios.get('http://toreadit.test/wp-json/TomoveitRestApi/v1/goals',
+      ).then((response) => {
+        setGoal6A(response.data[0].goal);
+        setGoal6B(response.data[1].goal);
+        setGoal6C(response.data[2].goal);
+      }, (error) => {
+        console.log(error);
+      });
+    }
   }, []);
 
   useEffect(() => {

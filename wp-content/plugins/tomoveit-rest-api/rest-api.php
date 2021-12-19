@@ -194,6 +194,12 @@ class TomoveitRestApi_Routes {
                 ],
             ],
         ]);
+        register_rest_route($namespace, '/goals', [
+            [
+                'methods' => WP_REST_Server::READABLE,
+                'callback' => [$this, 'get_goals'],
+            ],
+        ]);
     }
 
     public function rest_get_texts() {
@@ -678,5 +684,14 @@ class TomoveitRestApi_Routes {
         }
 
         return 'ok';
+    }
+
+    public function get_goals($request) {
+        $table = 'toreadit_week_goals';
+        global $wpdb;
+
+        $results = $wpdb->get_results($wpdb->prepare("SELECT * FROM $table"));
+
+        return $results;
     }
 }

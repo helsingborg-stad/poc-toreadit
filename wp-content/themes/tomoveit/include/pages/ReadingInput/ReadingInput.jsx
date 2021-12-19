@@ -15,6 +15,9 @@ const ReadingInput = () => {
   const history = useHistory();
 
   const [pages, setPages] = useState('');
+  const [goal6A, setGoal6A] = useState(0);
+  const [goal6B, setGoal6B] = useState(0);
+  const [goal6C, setGoal6C] = useState(0);
 
   const texts = useSelector(state => state.app.texts);
   const admin = useSelector(state => state.app.admin);
@@ -25,7 +28,7 @@ const ReadingInput = () => {
       pin: pin,
     },
     ).then((response) => {
-      if (response.data || admin) {
+      if (response.data && !admin) {
         history.push('/activities');
       }
     }, (error) => {
@@ -54,14 +57,43 @@ const ReadingInput = () => {
     setPages(e.target.value);
   };
 
+  const saveGoals = (e) => {
+    e.preventDefault();
+    axios.post('https://toreadit.hbgtest.se/wp-json/TomoveitRestApi/v1/update/goals', { data: [
+      { school_class: '6A', pages: goal6A },
+      { school_class: '6B', pages: goal6B },
+      { school_class: '6C', pages: goal6C },
+    ],
+    }
+    ).then((response) => {
+      console.log(response);
+    }, (error) => {
+      console.log(error);
+    });
+  };
+
   return (
     <div className={style('reading-input')}>
       <Container>
-        <div className={style('reading-input__content')}>
-          <h2>Registrera antal sidor!</h2>
-          <input className={style('reading-input__input')} type='number' onChange={handleOnChange} />
-          <Button loading={false} to={'/activities'} text={'Gå vidare'} handleClick={handleClick}/>
-        </div>
+        { !admin &&
+          <div className={style('reading-input__content')}>
+            <h2>Registrera antal sidor!</h2>
+            <input className={style('reading-input__input')} type='number' onChange={handleOnChange} />
+            <Button loading={false} to={'/activities'} text={'Gå vidare'} handleClick={handleClick}/>
+          </div>
+        }
+        { admin &&
+          <div>
+            <h2>Registrera mål för klass 6A</h2>
+            <input className={style('reading-input__input')} type='number' value={goal6A} onChange={(e) => setGoal6A(e.target.value)}/>
+            <h2>Registrera mål för klass 6B</h2>
+            <input className={style('reading-input__input')} type='number' value={goal6B} onChange={(e) => setGoal6B(e.target.value)}/>
+            <h2>Registrera mål för klass 6C</h2>
+            <input className={style('reading-input__input')} type='number' value={goal6C} onChange={(e) => setGoal6C(e.target.value)}/>
+            <Button loading={false} to={'/activities'} text={'Gå vidare'}/>
+            <Button loading={false} to={'/activities'} text={'Spara'} handleClick={saveGoals}/>
+          </div>
+        }
       </Container>
     </div>
   );

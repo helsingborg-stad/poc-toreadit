@@ -185,6 +185,15 @@ class TomoveitRestApi_Routes {
                 'callback' => [$this, 'rest_get_total_classes_data'],
             ],
         ]);
+        register_rest_route($namespace, '/update/goals', [
+            [
+                'methods' => WP_REST_Server::CREATABLE,
+                'callback' => [$this, 'update_goal'],
+                'goals' => [
+                    'required' => true,
+                ],
+            ],
+        ]);
     }
 
     public function rest_get_texts() {
@@ -605,7 +614,6 @@ class TomoveitRestApi_Routes {
 
         $data = [];
         $total_pages_sum = 0;
-        // TODO: Refactor this horrible for loop
         for ($i = 1;$i < 8;$i++) {
             $date = date('Y-m-d', strtotime($startDate. ' + ' . $i .' days'));
             $pages = 0;
@@ -625,23 +633,28 @@ class TomoveitRestApi_Routes {
         $startDate = $request->get_param('start_date');
         $endDate = $request->get_param('end_date');
         $table = 'toreadit_reading';
+        $table_goals = 'toreadit_week_goals';
         global $wpdb;
 
         $results_6a = $wpdb->get_results($wpdb->prepare("SELECT created_at, sum(pages) as sum_pages FROM $table WHERE class='6A' AND created_at <= '%s' AND created_at >= '%s' group by created_at;", $endDate, $startDate));
         $results_6b = $wpdb->get_results($wpdb->prepare("SELECT created_at, sum(pages) as sum_pages FROM $table WHERE class='6B' AND created_at <= '%s' AND created_at >= '%s' group by created_at;", $endDate, $startDate));
         $results_6c = $wpdb->get_results($wpdb->prepare("SELECT created_at, sum(pages) as sum_pages FROM $table WHERE class='6C' AND created_at <= '%s' AND created_at >= '%s' group by created_at;", $endDate, $startDate));
 
+        $goal_6a = $wpdb->get_results($wpdb->prepare("SELECT goal FROM $table_goals WHERE class='6A'"));
+        $goal_6b = $wpdb->get_results($wpdb->prepare("SELECT goal FROM $table_goals WHERE class='6B'"));
+        $goal_6c = $wpdb->get_results($wpdb->prepare("SELECT goal FROM $table_goals WHERE class='6C'"));
+
         $data = [];
-        array_push($data, ['class' => '6A' , 'data' => $this->format_class_data($results_6a, $startDate), 'goal' => 1000]);
-        array_push($data, ['class' => '6B' , 'data' => $this->format_class_data($results_6b, $startDate), 'goal' => 1000]);
-        array_push($data, ['class' => '6C' , 'data' => $this->format_class_data($results_6c, $startDate), 'goal' => 1000]);
+        array_push($data, ['class' => '6A' , 'data' => $this->format_class_data($results_6a, $startDate), 'goal' => (int) $goal_6a[0]->goal]);
+        array_push($data, ['class' => '6B' , 'data' => $this->format_class_data($results_6b, $startDate), 'goal' => (int) $goal_6b[0]->goal]);
+        array_push($data, ['class' => '6C' , 'data' => $this->format_class_data($results_6c, $startDate), 'goal' => (int) $goal_6c[0]->goal]);
         return $data;
     }
 
     public function format_class_data($results, $start_date) {
         $data = [];
         $total_pages_sum = 0;
-        // TODO: Refactor this horrible for loop
+
         for ($i = 1;$i < 8;$i++) {
             $date = date('Y-m-d', strtotime($start_date. ' + ' . $i .' days'));
             $pages = 0;
@@ -654,5 +667,16 @@ class TomoveitRestApi_Routes {
             array_push($data, $pages);
         }
         return ['pages_array' => $data, 'total_pages_sum' => $total_pages_sum];
+    }
+
+    public function update_goal($request) {
+        $data = $request->get_param('data');
+        $table = 'toreadit_week_goals';
+        global $wpdb;
+        foreach ($data as $item) {
+            $wpdb->query($wpdb->prepare("UPDATE $table SET goal = '%d'  WHERE class = '%s'", (int) $item['pages'], $item['school_class']));
+        }
+
+        return 'ok';
     }
 }
